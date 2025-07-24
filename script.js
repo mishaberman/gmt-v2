@@ -56,6 +56,16 @@ function addToCart(name, price) {
     updateCartCount();
     showNotification(`Added ${name} to cart!`);
     saveCartToLocalStorage();
+
+   // Send Facebook Pixel AddToCart event
+    if (typeof fbq === 'function') {
+        fbq('track', 'AddToCart', {
+            content_name: name,
+            content_type: 'product',
+            value: price,
+            currency: 'USD'  // Change if needed
+        });
+    }
 }
 
 // Function to remove an item from the cart
