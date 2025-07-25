@@ -194,7 +194,7 @@ function completePurchase() {
         price: data.price,
         quantity: data.quantity,
         id: 
-    }));
+    });
 
     // Push GTM dataLayer purchase event
     window.dataLayer = window.dataLayer || [];
