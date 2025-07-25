@@ -214,7 +214,7 @@ function completePurchase() {
         saveCartToLocalStorage();
         updateCartCount();
         window.location.href = 'purchase-confirmation.html';
-    }, 300);  // 300ms is usually enough for GTM to process the event
+    }, 1000);  // 300ms is usually enough for GTM to process the event
 }
 
 // Add listener to purchase button
