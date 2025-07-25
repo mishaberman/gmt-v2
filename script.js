@@ -208,11 +208,13 @@ function completePurchase() {
         }
     });
 
-    // Clear cart and redirect
-    //cart = {};
-    //saveCartToLocalStorage();
-   // updateCartCount();
-    window.location.href = 'purchase-confirmation.html';
+    // ✅ Add a small delay before clearing cart
+    setTimeout(() => {
+        cart = {};
+        saveCartToLocalStorage();
+        updateCartCount();
+        window.location.href = 'purchase-confirmation.html';
+    }, 300);  // 300ms is usually enough for GTM to process the event
 }
 
 // Add listener to purchase button
