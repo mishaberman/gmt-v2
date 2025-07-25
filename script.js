@@ -41,7 +41,7 @@ function addToCart(name, price, id) {
     if (cart[id]) {
         cart[id].quantity++;
     } else {
-        cart[id] = { price, quantity: 1, itme_name: name };
+        cart[id] = { price, quantity: 1, item_name: name };
     }
     updateCartCount();
     showNotification(`Added ${name} to cart!`);
