@@ -37,11 +37,11 @@ function updateCartCount() {
 }
 
 // Add an item to the cart
-function addToCart(name, price) {
-    if (cart[name]) {
-        cart[name].quantity++;
+function addToCart(name, price, id) {
+    if (cart[id]) {
+        cart[id].quantity++;
     } else {
-        cart[name] = { price, quantity: 1 };
+        cart[id] = { price, quantity: 1 };
     }
     updateCartCount();
     showNotification(`Added ${name} to cart!`);
@@ -57,17 +57,18 @@ function addToCart(name, price) {
             items: [{
                 item_name: name,
                 price: price,
-                quantity: 1
+                quantity: 1,
+                id: id
             }]
         }
     });
 }
 
 // Remove an item from the cart
-function removeFromCart(name) {
-    if (cart[name]) {
-        const removedItem = cart[name];
-        delete cart[name];
+function removeFromCart(id) {
+    if (cart[id]) {
+        const removedItem = cart[id];
+        delete cart[id];
         updateCartCount();
         saveCartToLocalStorage();
 
@@ -81,7 +82,8 @@ function removeFromCart(name) {
                 items: [{
                     item_name: name,
                     price: removedItem.price,
-                    quantity: removedItem.quantity
+                    quantity: removedItem.quantity,
+                    id: removedItem.id
                 }]
             }
         });
@@ -112,23 +114,23 @@ function displayCartTable() {
     const cartTableBody = document.getElementById('cart-body');
     if (!cartTableBody) return;
     cartTableBody.innerHTML = '';
-    for (const name in cart) {
+    for (const id in cart) {
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
-        nameCell.textContent = name;
+        nameCell.textContent = cart[id].item_name;
         row.appendChild(nameCell);
 
         const priceCell = document.createElement('td');
-        priceCell.textContent = `$${cart[name].price}`;
+        priceCell.textContent = `$${cart[id].price}`;
         row.appendChild(priceCell);
 
         const quantityCell = document.createElement('td');
-        quantityCell.textContent = cart[name].quantity;
+        quantityCell.textContent = cart[id].quantity;
         row.appendChild(quantityCell);
 
         const totalCell = document.createElement('td');
-        totalCell.textContent = `$${cart[name].price * cart[name].quantity}`;
+        totalCell.textContent = `$${cart[id].price * cart[id].quantity}`;
         row.appendChild(totalCell);
 
         cartTableBody.appendChild(row);
@@ -152,22 +154,22 @@ function displayCartSummary() {
     const cartSummaryBody = document.getElementById('cart-summary-body');
     if (!cartSummaryBody) return;
     cartSummaryBody.innerHTML = '';
-    for (const name in cart) {
+    for (const id in cart) {
         const row = document.createElement('tr');
 
         const productCell = document.createElement('td');
-        productCell.textContent = name;
+        productCell.textContent = cart[id].item_name;
         productCell.style.width = '40%';
         row.appendChild(productCell);
 
         const quantityCell = document.createElement('td');
-        quantityCell.textContent = cart[name].quantity;
+        quantityCell.textContent = cart[id].quantity;
         quantityCell.style.width = '20%';
         quantityCell.style.textAlign = 'center';
         row.appendChild(quantityCell);
 
         const totalCell = document.createElement('td');
-        totalCell.textContent = `$${cart[name].price * cart[name].quantity}`;
+        totalCell.textContent = `$${cart[id].price * cart[id].quantity}`;
         totalCell.style.width = '40%';
         totalCell.style.textAlign = 'right';
         row.appendChild(totalCell);
@@ -187,10 +189,11 @@ if (document.getElementById('cart-summary-table')) {
 // Complete purchase
 function completePurchase() {
     const total = getCartTotal();
-    const items = Object.entries(cart).map(([name, data]) => ({
-        item_name: name,
+    const items = Object.entries(cart).map(([id, data]) => ({
+        item_name: data.item_name,
         price: data.price,
-        quantity: data.quantity
+        quantity: data.quantity,
+        id: 
     }));
 
     // Push GTM dataLayer purchase event
