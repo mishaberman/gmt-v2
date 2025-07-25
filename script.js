@@ -190,11 +190,11 @@ if (document.getElementById('cart-summary-table')) {
 function completePurchase() {
     const total = getCartTotal();
     const items = Object.entries(cart).map(([id, data]) => ({
+        id: id,
         item_name: data.item_name,
         price: data.price,
-        quantity: data.quantity,
-        id: 
-    });
+        quantity: data.quantity
+    }));
 
     // Push GTM dataLayer purchase event
     window.dataLayer = window.dataLayer || [];
