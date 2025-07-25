@@ -209,9 +209,9 @@ function completePurchase() {
     });
 
     // Clear cart and redirect
-    cart = {};
-    saveCartToLocalStorage();
-    updateCartCount();
+    //cart = {};
+    //saveCartToLocalStorage();
+   // updateCartCount();
     window.location.href = 'purchase-confirmation.html';
 }
 
